@@ -119,7 +119,7 @@ public class ShapeBehaviourScript : MonoBehaviour {
         }
     }
     
-    bool IsItGrounded(Transform shape)
+    public bool IsItGrounded(Transform shape)
     {
         int i = 0;
         foreach(Transform cube in shape)
