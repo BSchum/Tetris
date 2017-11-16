@@ -26,8 +26,6 @@ public class ShapeSpawnerScript : MonoBehaviour {
     // Use this for initialization
     void Start () {
 
-
-
         // Declaration
         IndexShapeToSpawn = new List<int>();
         ShapeToSpawn = new List<GameObject>();
@@ -63,11 +61,12 @@ public class ShapeSpawnerScript : MonoBehaviour {
             FillListofShapes();
         }
 
-       /* if (Input.GetButtonDown("Vertical") && Input.GetAxisRaw("Vertical") > 0)
+        if (Input.GetButtonDown("Vertical") && Input.GetAxisRaw("Vertical") > 0)
         {
+            Debug.Log(HoldedShape);
             HoldAShape();
         }
-        */
+        
      }
 
     void UpdateSpriteNextShape()
@@ -82,24 +81,21 @@ public class ShapeSpawnerScript : MonoBehaviour {
     void HoldAShape()
     {
         GameObject transitionObject;
-        Debug.Log(HoldedShape);
-        if(HoldedShape)
+        if(HoldedShape)// Si on tiens deja un objet
         {
-            HoldedShape = gameObjectInTerrain;
-            Destroy(gameObjectInTerrain);
-            Spawn(ShapeToSpawn[Cursor]);
-            Cursor++;
-            AfterCursor = Cursor + 1;
-            UpdateSpriteNextShape();
-            Debug.Log("Holded == null");
-
+            transitionObject = HoldedShape;// On enregistre le GO tenu dans un objet de transition
+            HoldedShape = gameObjectInTerrain;// On enregistre le GO du terrain comme objet tenu
+            Spawn(transitionObject);// ON fait spawn l'objet qui etait tenu
         }
         else
         {
-            transitionObject = HoldedShape;
-            HoldedShape = gameObjectInTerrain;
-            Spawn(transitionObject);
-            Debug.Log("Holded != null");
+            HoldedShape = gameObjectInTerrain;// On recupere le GO du terrain pour l'enregister comme " GameObject Tenu"
+            Destroy(gameObjectInTerrain);// On le détruit car si il est Hold il ne doit pas etre dans le terrain
+            Spawn(ShapeToSpawn[Cursor]);// On fait spawn la prochaine forme
+            Cursor++;// On passe le curseur a la forme d'apres
+            AfterCursor = Cursor + 1;
+            UpdateSpriteNextShape();// On update le sprite de la prochaine forme qui spawnera
+            Debug.Log(HoldedShape);
         }
     }
     //Preparing data
