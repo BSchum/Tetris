@@ -25,6 +25,9 @@ public class ShapeSpawnerScript : MonoBehaviour {
 
     bool isFirstHold;
     bool isTradable;
+
+    float firstGrounded;
+    float delayFirstGroundedForSpawn;
     // Use this for initialization
     void Start () {
 
@@ -50,7 +53,7 @@ public class ShapeSpawnerScript : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (gameObjectInTerrain.GetComponent<ShapeBehaviourScript>().IsItGrounded(gameObjectInTerrain.transform))
+        if (gameObjectInTerrain.GetComponent<ShapeBehaviourScript>().IsItGrounded(gameObjectInTerrain.transform) && gameObjectInTerrain.GetComponent<ShapeBehaviourScript>().isDelayedAfterGounded())
         {
             UpdateSpriteNextShape();
             Spawn(ShapeToSpawn[Cursor]);
@@ -66,8 +69,7 @@ public class ShapeSpawnerScript : MonoBehaviour {
 
         if (Input.GetButtonDown("Vertical") && Input.GetAxisRaw("Vertical") > 0)
         {
-            Debug.Log("Before HoldAShapeFunc");
-            Debug.Log(HoldedShape);
+      
             HoldAShape();
         }
         

@@ -12,9 +12,13 @@ public class ShapeBehaviourScript : MonoBehaviour {
     static int numberOfShapes;
     public int shapeId;
     GameObject preview;
-    public bool isGrounded = false;
+    float isGroundedMoment;
+    float timeToMoveWhileGrounded = 0.5f;
+
+    bool firstGroundedDone;
 	// Use this for initialization
 	void Start () {
+        firstGroundedDone = false;
         lastFallingMovement = 0;
         fallingSpeed = constFallingSpeed;
         numberOfShapes++;
@@ -31,10 +35,18 @@ public class ShapeBehaviourScript : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
+        CheckFirstIsGrounded();
         if (!IsItGrounded(this.transform))
         {
             MoveHorizontally();
             Fall();
+            RotateShape();
+            PreviewPosition();
+            InstantMoveToPreview();
+        }
+        else if(IsItGrounded(this.transform) && Time.time < isGroundedMoment + timeToMoveWhileGrounded)
+        {
+            MoveHorizontally();
             RotateShape();
             PreviewPosition();
             InstantMoveToPreview();
@@ -45,6 +57,28 @@ public class ShapeBehaviourScript : MonoBehaviour {
             Destroy(preview);
         }
 	}
+
+    void CheckFirstIsGrounded()
+    {
+        if(IsItGrounded(this.transform) && !firstGroundedDone)
+        {
+            isGroundedMoment = Time.time;
+            firstGroundedDone = true;
+            Debug.Log("First grounded");
+        }
+    }
+    public bool isDelayedAfterGounded()
+    {
+        if(Time.time > isGroundedMoment + timeToMoveWhileGrounded && firstGroundedDone)
+        {
+            Debug.Log("Delay ended");
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
     void InstantMoveToPreview()
     {
         if (Input.GetButtonDown("Vertical"))
@@ -122,12 +156,11 @@ public class ShapeBehaviourScript : MonoBehaviour {
     public bool IsItGrounded(Transform shape)
     {
         int i = 0;
-        foreach(Transform cube in shape)
+        foreach (Transform cube in shape)
         {
-            i++; 
-            if (Mathf.Round(cube.position.y) == 1 || GameScript.Shapes[(int)Mathf.Round(cube.position.x-1), (int)Mathf.Round(cube.position.y - 1)] != null )
-            {
-                isGrounded = true;
+            i++;
+            if (Mathf.Round(cube.position.y) == 1 || GameScript.Shapes[(int)Mathf.Round(cube.position.x - 1), (int)Mathf.Round(cube.position.y - 1)] != null)
+            { 
                 return true;
             }
         }

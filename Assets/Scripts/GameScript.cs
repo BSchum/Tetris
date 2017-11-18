@@ -59,6 +59,7 @@ public class GameScript : MonoBehaviour {
         for(int y = 0; y <= indexes.Count-1; y++)
         {
             score += 100;
+
             for (int x = 0; x < gridWidth; x++)
             {
                 Destroy(Shapes[x, indexes[y]].gameObject);

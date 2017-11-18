@@ -326,7 +326,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 327178728}
-  - component: {fileID: 327178727}
   - component: {fileID: 327178729}
   - component: {fileID: 327178730}
   m_Layer: 0
@@ -336,36 +335,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &327178727
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 327178726}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae05d76404c96b243bf765b3c02816bb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Shapes:
-  - {fileID: 1082647419206472, guid: 321eb1da59839db43b357f98da0353f4, type: 2}
-  - {fileID: 1822967352667422, guid: 2e9a562b96a2e1141b8231b281d4dc54, type: 2}
-  - {fileID: 1097399268511306, guid: a29b01d8411f6734d87d272951329b06, type: 2}
-  - {fileID: 1630167446590700, guid: 8b843a15dd33f284589dc61e997d8317, type: 2}
-  - {fileID: 1763495866326798, guid: f10f316843660e845a1deca65765e8d1, type: 2}
-  - {fileID: 1834475301737846, guid: ffd1264d21145024c85987d16c100fc5, type: 2}
-  - {fileID: 1668737172730856, guid: b99719a99ea50cc42989f252ca61d95e, type: 2}
-  shapesParent: {fileID: 203174386}
-  PicsShapes:
-  - {fileID: 21300000, guid: db143e658df5db0489dae9fc94102b3a, type: 3}
-  - {fileID: 21300000, guid: be4c227eeb7aeef46813b34ecf881bd3, type: 3}
-  - {fileID: 21300000, guid: 76cdfd1ecd0be1043bcd9dd3730af2b2, type: 3}
-  - {fileID: 21300000, guid: a2d5936255a425e4f830298d2965099f, type: 3}
-  - {fileID: 21300000, guid: 5683c11824dbcf74cb8fae80f0e209a8, type: 3}
-  - {fileID: 21300000, guid: f36e1042505cd11438949fe847faff28, type: 3}
-  - {fileID: 21300000, guid: 66b1e3b67416aa849a01a18c8e3ab716, type: 3}
-  nextShapePreview: {fileID: 997062650}
-  HoldedShapePic: {fileID: 588711471}
 --- !u!4 &327178728
 Transform:
   m_ObjectHideFlags: 0
