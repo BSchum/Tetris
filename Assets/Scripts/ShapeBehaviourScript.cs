@@ -163,5 +163,9 @@ public class ShapeBehaviourScript : MonoBehaviour {
         }
         this.enabled = false;
     }
-    
+    private void OnDestroy()
+    {
+        Destroy(preview);
+    }
+
 }

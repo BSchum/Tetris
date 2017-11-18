@@ -23,6 +23,8 @@ public class ShapeSpawnerScript : MonoBehaviour {
 
     GameObject HoldedShape;
 
+    bool isFirstHold;
+    bool isTradable;
     // Use this for initialization
     void Start () {
 
@@ -54,6 +56,7 @@ public class ShapeSpawnerScript : MonoBehaviour {
             Spawn(ShapeToSpawn[Cursor]);
             Cursor++;
             AfterCursor = Cursor + 1;
+            isTradable = true;
         }
 
         if(Cursor % 100 == 0)
@@ -63,6 +66,7 @@ public class ShapeSpawnerScript : MonoBehaviour {
 
         if (Input.GetButtonDown("Vertical") && Input.GetAxisRaw("Vertical") > 0)
         {
+            Debug.Log("Before HoldAShapeFunc");
             Debug.Log(HoldedShape);
             HoldAShape();
         }
@@ -77,25 +81,49 @@ public class ShapeSpawnerScript : MonoBehaviour {
     void Spawn(GameObject shape)
     {
         gameObjectInTerrain = Instantiate(shape, spawnPosition, spawnRotation, shapeParent.transform);
+        gameObjectInTerrain.SetActive(true);
     }
     void HoldAShape()
     {
         GameObject transitionObject;
         if(HoldedShape)// Si on tiens deja un objet
         {
-            transitionObject = HoldedShape;// On enregistre le GO tenu dans un objet de transition
-            HoldedShape = gameObjectInTerrain;// On enregistre le GO du terrain comme objet tenu
-            Spawn(transitionObject);// ON fait spawn l'objet qui etait tenu
+            if (isTradable)
+            {
+                transitionObject = Instantiate(HoldedShape);// On enregistre le GO tenu dans un objet de transition
+                transitionObject.SetActive(false);
+                HoldedShape = Instantiate(gameObjectInTerrain);// On enregistre le GO du terrain comme objet tenu
+                HoldedShape.SetActive(false);
+                Destroy(gameObjectInTerrain);
+                Spawn(transitionObject);// ON fait spawn l'objet qui etait tenu
+                UpdateSpriteHoldedShape();
+                isTradable = false;
+            }
         }
         else
         {
-            HoldedShape = gameObjectInTerrain;// On recupere le GO du terrain pour l'enregister comme " GameObject Tenu"
+            HoldedShape = Instantiate(gameObjectInTerrain);// On recupere le GO du terrain pour l'enregister comme " GameObject Tenu"
             Destroy(gameObjectInTerrain);// On le détruit car si il est Hold il ne doit pas etre dans le terrain
             Spawn(ShapeToSpawn[Cursor]);// On fait spawn la prochaine forme
             Cursor++;// On passe le curseur a la forme d'apres
             AfterCursor = Cursor + 1;
             UpdateSpriteNextShape();// On update le sprite de la prochaine forme qui spawnera
-            Debug.Log(HoldedShape);
+            UpdateSpriteHoldedShape();
+            HoldedShape.SetActive(false);
+
+        }
+    }
+    void UpdateSpriteHoldedShape()
+    {
+        if (isFirstHold)
+        {
+            HoldedShapePic.sprite = ShapePics[IndexShapeToSpawn[Cursor - 1]];
+            isFirstHold = false;
+        }
+        else
+        {
+            HoldedShapePic.sprite = ShapePics[IndexShapeToSpawn[Cursor - 2]];
+            isFirstHold = true;
         }
     }
     //Preparing data
