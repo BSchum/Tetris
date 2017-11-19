@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameScript : MonoBehaviour {
     const int gridWidth = 10;
-    const int gridHeight = 22;
+    const int gridHeight = 30;
     public static Transform[,] Shapes = new Transform[gridWidth, gridHeight];
     public GameObject shapesParent;
     public Text UIScore;
@@ -21,7 +22,7 @@ public class GameScript : MonoBehaviour {
 	void Update () {
         VerifyLines(Shapes);
         UpdateScore(score, UIScore);
-        Pause();
+        GetPause();
 	}
     /// <summary>
     /// Verify lines in 2D Array Shapes, if a line ( 10 cube ) is full of cube,
@@ -39,6 +40,10 @@ public class GameScript : MonoBehaviour {
                 if (Shapes[x,y] != null)
                 {
                     cubeNumber++;
+                }
+                if(y > 20 && Shapes[x,y] != null)
+                {
+                    Loose();
                 }
             }
             if(cubeNumber == 10)
@@ -97,17 +102,27 @@ public class GameScript : MonoBehaviour {
         textToUpdate.text = score.ToString();
     }
 
+    void GetPause()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Pause();
+        }
+    }
+
     void Pause()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && !isPaused)
+        if (!isPaused)
         {
             isPaused = true;
-            Debug.Log(Time.timeScale);
         }
-        else if(Input.GetKeyDown(KeyCode.Escape) && isPaused)
+        else if (isPaused)
         {
             isPaused = false;
         }
-
+    }
+    void Loose()
+    {
+        SceneManager.LoadScene("loose");
     }
 }

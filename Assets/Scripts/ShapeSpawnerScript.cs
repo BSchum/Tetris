@@ -15,7 +15,7 @@ public class ShapeSpawnerScript : MonoBehaviour {
 
     GameObject gameObjectInTerrain;
     //-------Variable for SpawnPosition
-    Vector2 spawnPosition = new Vector2(7f, 20f);
+    Vector2 spawnPosition = new Vector2(7f, 24f);
     Quaternion spawnRotation = new Quaternion(0, 0, 0, 0);
 
     public Image HoldedShapePic;
