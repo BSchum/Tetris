@@ -11,15 +11,17 @@ public class GameScript : MonoBehaviour {
     public Text UIScore;
     int score;
 
+    public bool isPaused;
     // Use this for initialization
     void Start () {
-		
+        isPaused = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
         VerifyLines(Shapes);
         UpdateScore(score, UIScore);
+        Pause();
 	}
     /// <summary>
     /// Verify lines in 2D Array Shapes, if a line ( 10 cube ) is full of cube,
@@ -93,5 +95,19 @@ public class GameScript : MonoBehaviour {
     void UpdateScore(int score, Text textToUpdate)
     {
         textToUpdate.text = score.ToString();
+    }
+
+    void Pause()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape) && !isPaused)
+        {
+            isPaused = true;
+            Debug.Log(Time.timeScale);
+        }
+        else if(Input.GetKeyDown(KeyCode.Escape) && isPaused)
+        {
+            isPaused = false;
+        }
+
     }
 }

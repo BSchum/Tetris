@@ -14,10 +14,12 @@ public class ShapeBehaviourScript : MonoBehaviour {
     GameObject preview;
     float isGroundedMoment;
     float timeToMoveWhileGrounded = 0.5f;
-
     bool firstGroundedDone;
-	// Use this for initialization
+    GameScript gameScript;
+        // Use this for initialization
 	void Start () {
+
+        gameScript = GameObject.Find("Spawner").GetComponent<GameScript>();
         firstGroundedDone = false;
         lastFallingMovement = 0;
         fallingSpeed = constFallingSpeed;
@@ -35,26 +37,29 @@ public class ShapeBehaviourScript : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        CheckFirstIsGrounded();
-        if (!IsItGrounded(this.transform))
+        if (!gameScript.isPaused)
         {
-            MoveHorizontally();
-            Fall();
-            RotateShape();
-            PreviewPosition();
-            InstantMoveToPreview();
-        }
-        else if(IsItGrounded(this.transform) && Time.time < isGroundedMoment + timeToMoveWhileGrounded)
-        {
-            MoveHorizontally();
-            RotateShape();
-            PreviewPosition();
-            InstantMoveToPreview();
-        }
-        else
-        {
-            RegisterShapeInGrid(this.transform);
-            Destroy(preview);
+            CheckFirstIsGrounded();
+            if (!IsItGrounded(this.transform))
+            {
+                MoveHorizontally();
+                Fall();
+                RotateShape();
+                PreviewPosition();
+                InstantMoveToPreview();
+            }
+            else if (IsItGrounded(this.transform) && Time.time < isGroundedMoment + timeToMoveWhileGrounded)
+            {
+                MoveHorizontally();
+                RotateShape();
+                PreviewPosition();
+                InstantMoveToPreview();
+            }
+            else
+            {
+                RegisterShapeInGrid(this.transform);
+                Destroy(preview);
+            }
         }
 	}
 
